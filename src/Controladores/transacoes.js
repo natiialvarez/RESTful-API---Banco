@@ -29,7 +29,15 @@ const cadastrarTransacao = async (req, res) => {
 }
 
 const listarTransacoes = async (req, res) => {
-    //lembrar que é apenas a transação do usuario que esta logado, e não de todos
+    const id = req.usuario.id
+    try {
+        const query = 'SELECT * FROM transacoes WHERE usuario_id = $1'
+        const params = [id]
+        const transacoes = await pool.query(query, params)
+        return res.status(200).json(transacoes.rows)
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    }
 }
 
 const detalharTransacao = async (req, res) => {
@@ -46,9 +54,50 @@ const detalharTransacao = async (req, res) => {
     }
 }
 
+const atualizarTransacao = async (req, res) => {
+    const { id } = req.params
+    try {
+        const { descricao, valor, tipo, data, categoria_id } = req.body
+        if (!descricao || !valor || !data || !tipo || !categoria_id) {
+            return res.status(400).json({ mensagem: 'Todos os campos são obrigatorios' })
+        }
+        const queryValidarCategoria = 'SELECT id FROM categorias WHERE  id = $1'
+        const paramsValidarCategoria = [categoria_id]
+        const validarCategoria = await pool.query(queryValidarCategoria, paramsValidarCategoria)
+        if (validarCategoria.rowCount === 0) {
+            return res.status(404).json({ mensagem: 'Id da categoria não encontrado' })
+        }
+        const queryTransacao = 'SELECT * FROM transacoes WHERE id = $1'
+        const paramsTransacao = [id]
+        const transacao = await pool.query(queryTransacao, paramsTransacao)
 
+        if (transacao.rows[0].tipo != tipo) {
+            return res.status(400).json({ mensagem: "O tipo de transacao não corresponde a do banco de dados" })
+        }
+        const queryAtualizar = ' UPDATE transacoes SET descricao = $1, valor = $2, data = $3,categoria_id = $4 WHERE id = $5'
+        const paramsAtualizar = [descricao, valor, data, categoria_id, id]
+        const transacaoAtualizada = await pool.query(queryAtualizar, paramsAtualizar)
+        console.log(transacaoAtualizada)
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    }
+}
+
+const excluirTransacao = async (req, res) => {
+    const idUsuario = req.usuario.id
+    const { id } = req.params
+    try {
+        const queryTransacao = 'DELETE FROM transacoes WHERE id = $1'
+        const paramsTransacao = [id]
+        const transacao = await pool.query(queryTransacao, paramsTransacao)
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    }
+}
 module.exports = {
     cadastrarTransacao,
     listarTransacoes,
-    detalharTransacao
+    detalharTransacao,
+    atualizarTransacao,
+    excluirTransacao
 }
