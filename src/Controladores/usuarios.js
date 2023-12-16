@@ -48,7 +48,15 @@ const login = async (req, res) => {
 
 const detalharUsuario = async (req, res) => {
     const id = req.usuario.id
-    console.log(id)
+    try {
+        const query = 'SELECT id, nome, email FROM usuarios WHERE id = $1'
+        const params = [id]
+        const detalheDousuario = await pool.query(query, params)
+        return res.status(200).json(detalheDousuario.rows)
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    }
+
 }
 
 const atualizarUsuario = async (req, res) => {
@@ -68,7 +76,6 @@ const atualizarUsuario = async (req, res) => {
         const query = 'UPDATE usuarios SET nome = $1 , email = $2 ,senha = $3 WHERE id = $4'
         const params = [nome, email, senhaCriptografada, usuarioLogado.id]
         const usuarioAtualizado = await pool.query(query, params)
-        console.log(usuarioAtualizado.rows)
         return res.status(200).json(usuarioAtualizado.rows[0])
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor' })

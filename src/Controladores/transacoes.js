@@ -35,7 +35,9 @@ const listarTransacoes = async (req, res) => {
 const detalharTransacao = async (req, res) => {
     const { id } = req.params
     try {
-        const query = 'SELECT t.id, t.tipo, t.descricao, t.valor, t.data, t.usuario_id, c.descricao AS categoria_nome, c.id AS categoria_id FROM transacoes t join categorias c on t.categoria_id = c.id WHERE t.id= $1 and t.usuario_id = $2'
+        const query = `SELECT t.id, t.tipo, t.descricao, t.valor, t.data, t.usuario_id, c.descricao AS categoria_nome, c.id AS categoria_id 
+        FROM transacoes t join categorias c on t.categoria_id = c.id 
+        WHERE t.id= $1 and t.usuario_id = $2`
         const params = [id, req.transacaoDetalhada.usuario_id]
         const transacaoEncontrada = await pool.query(query, params)
         return res.status(200).json(transacaoEncontrada.rows[0])

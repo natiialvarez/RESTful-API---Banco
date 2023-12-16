@@ -7,13 +7,11 @@ const validarIdDoUsuarioLogado = async (req, res, next) => {
     try {
         const query = 'SELECT * FROM transacoes WHERE usuario_id = $1 AND id = $2'
         const params = [req.usuario.id, id]
-        const resultado = await pool.query(query, params)
-        if (resultado.rowCount === 0) {
+        const transacoesUsuario = await pool.query(query, params)
+        if (transacoesUsuario.rowCount === 0) {
             return res.status(404).json({ mensagem: 'Transação não encontrada para o usuário logado.' })
         }
-        req.transacaoDetalhada = resultado.rows[0]
-        console.log(req.transacaoDetalhada)
-
+        req.transacaoDetalhada = transacoesUsuario.rows[0]
         next()
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor' })
