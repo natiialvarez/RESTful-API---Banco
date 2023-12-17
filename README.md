@@ -87,9 +87,11 @@ Foram criadas as seguintes tabelas e colunas no banco de dados PostgreSQL chamad
 - nome
 - email (campo único)
 - senha
+  
 **Tabela categorias:**
 - id
 - descricao
+  
 **Tabela transacoes:**
 - id
 - descricao
@@ -98,6 +100,7 @@ Foram criadas as seguintes tabelas e colunas no banco de dados PostgreSQL chamad
 - categoria_id
 - usuario_id
 - tipo
+- 
 ## Autores
 
 - [@natiialvarez](https://github.com/natiialvarez)
