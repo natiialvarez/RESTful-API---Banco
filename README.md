@@ -28,6 +28,12 @@ npm install
 Importante lembrar que, como é uma API com validação de token, ao fazer login com o usuario criado deve-se copiar o token e coloca-lo como Bearer token
 
 
+## Demonstração
+
+Demonstração da criação do usuario, login e da autenticação do mesmo.
+
+![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGtveHBmeGwxZmVkbWdudTNrc21ya3NmdWtxb3NoNzJ5dGJkN3psOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FZHK3dYtQ0qgZ6r3Og/giphy.gif)
+
 ## Bibliotecas utilizadas
 - Express: Gerenciamento de rotas e requisições HTTP.
 - bcrypt: Para criptografar senhas antes de persistir no banco de dados.
@@ -96,8 +102,3 @@ Foram criadas as seguintes tabelas e colunas no banco de dados PostgreSQL chamad
 
 - [@natiialvarez](https://github.com/natiialvarez)
 
-
-## Demonstração
-
-Demonstração da criação do usuario, login e da autenticação do mesmo.
-![Alt Text](https://dai.ly/k13TSNnb3ovGGzzLylI)
