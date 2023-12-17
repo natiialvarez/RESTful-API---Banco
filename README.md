@@ -89,7 +89,7 @@ Foram criadas as seguintes tabelas e colunas no banco de dados PostgreSQL chamad
 - senha
 **Tabela categorias:**
 - id
-- mdescricao
+- descricao
 **Tabela transacoes:**
 - id
 - descricao
