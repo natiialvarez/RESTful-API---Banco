@@ -100,4 +100,4 @@ Foram criadas as seguintes tabelas e colunas no banco de dados PostgreSQL chamad
 ## Demonstração
 
 Demonstração da criação do usuario, login e da autenticação do mesmo.
-![Alt Text](https://clipchamp.com/watch/5Nx2B4Vpdx0)
+![Alt Text](https://dai.ly/k13TSNnb3ovGGzzLylI)
